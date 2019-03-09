@@ -9,25 +9,27 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    // references to the labels seen by the user
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     
-    
-    
+    // the important bits
     let baseUrl = "https://api.openweathermap.org/data/2.5/weather?"
     let APIkey = "8ef111fa0a6c852cb9ae513502652867"
     let city = "Houston"
     
+    // this is hand-waving magic
     var session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
     
+    // default methoc. Most work will COME from here
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         self.cityLabel.text = self.city
         searchByCity(city: self.city)
     }
     
+    // helper functions
     func addAPIkey(url: String) -> String {
         return url + "&appid=" + self.APIkey;
     }
@@ -46,7 +48,9 @@ class ViewController: UIViewController {
         let urlWithCityUnitApi = addAPIkey(url: urlWithCityUnit)
         return urlWithCityUnitApi
     }
+    // end helper functions
     
+    // make the API call
     func searchByCity(city: String) {
         let callableUrlString = makeBasicUrlString()
         let callableUrl = URL(string: callableUrlString)!
